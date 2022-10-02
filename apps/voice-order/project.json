@@ -18,6 +18,7 @@
         "main": "apps/voice-order/src/main.tsx",
         "polyfills": "apps/voice-order/src/polyfills.ts",
         "tsConfig": "apps/voice-order/tsconfig.app.json",
+        "postcssConfig": "apps/voice-order/postcss.config.js",
         "assets": [
           "apps/voice-order/src/favicon.ico",
           "apps/voice-order/src/assets"
