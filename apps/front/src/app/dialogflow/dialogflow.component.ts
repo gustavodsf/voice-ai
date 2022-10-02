@@ -1,3 +1,4 @@
+
 import { Component, AfterViewInit } from '@angular/core';
 import { FulfillmentService } from '../services/fulfillment.service';
 import { IoService } from '../services/io.service';
@@ -7,7 +8,7 @@ import { EventService } from '../services/event.service';
 @Component({
     selector: 'app-dialogflow',
     templateUrl: './dialogflow.component.html',
-    styleUrls: ['./dialogflow.component.css']
+    styleUrls: ['./dialogflow.component.scss']
 })
 
 export class DialogflowComponent implements AfterViewInit {
@@ -22,34 +23,35 @@ export class DialogflowComponent implements AfterViewInit {
     ngAfterViewInit() {
         let me = this;
         me.audioContext = new AudioContext();
-
         me.ioService.receiveStream('results', function(data: any) {
-            me.eventService.setIsPlaying(false);
-            me.fulfillmentService.setFulfillments(data);
+        me.eventService.setIsPlaying(false);
+        me.fulfillmentService.setFulfillments(data);
         });
 
         me.ioService.receiveStream('audio', function(audio: any) {
-            if (audio) {
-              me.playOutput(audio);
-            }
+        if (audio) {
+            me.playOutput(audio);
+        }
         });
-
         me.ioService.receiveStream('transcript', function(transcript: any) {
-            me.fulfillmentService.setFulfillments({
-              UTTERANCE: transcript
-            });
+        me.fulfillmentService.setFulfillments({
+            UTTERANCE: transcript
         });
-
+        });
         me.eventService.audioStopping.subscribe(() => {
-            me.stopOutput();
+        me.stopOutput();
         });
     }
 
+    /**
+    * Text to Speech event, when clicked on a Dialogflow results card
+    * @param event event
+    */
     textToSpeech(event: any) {
         let me = this;
         let answerNode = event.target.parentNode.querySelector('.answer');
         let text = answerNode.innerHTML;
-    
+
         // iOS Audio hack. - this can only be triggered from a user interaction
         // create empty buffer to warm up
         let b = me.audioContext.createBuffer(1, 1, 22050);
@@ -64,35 +66,43 @@ export class DialogflowComponent implements AfterViewInit {
         me.ioService.sendMessage('tts', { text });
     }
 
+    /**
+    * When Dialogflow matched an intent,
+    * return an audio buffer to play this sound output.
+    */
     playOutput(arrayBuffer: ArrayBuffer) {
         let me = this;
         me.eventService.setIsPlaying(true);
         try {
-          if (arrayBuffer.byteLength > 0) {
-              me.audioContext.decodeAudioData(arrayBuffer,
-              function(buffer) {
-                  me.audioContext.resume();
-                  me.outputSource = me.audioContext.createBufferSource();
-                  me.outputSource.buffer = buffer;
-                  me.outputSource.connect(me.audioContext.destination);
-                  me.outputSource.start(0);
-                  me.outputSource.onended = function() {
+        if (arrayBuffer.byteLength > 0) {
+            me.audioContext.decodeAudioData(arrayBuffer,
+            function(buffer) {
+                me.audioContext.resume();
+                me.outputSource = me.audioContext.createBufferSource();
+                me.outputSource.buffer = buffer;
+                me.outputSource.connect(me.audioContext.destination);
+                me.outputSource.start(0);
+                me.outputSource.onended = function() {
                     // we need the timeout, because of the timeslice in mic.
                     setTimeout(function(){ 
-                      me.eventService.setIsPlaying(false);
+                    me.eventService.setIsPlaying(false);
                     }, 5000);
-                  }
-              },
-              function() {
-                  console.log(arguments);
-              });
-          }
+                }
+            },
+            function() {
+                console.log(arguments);
+            });
+        }
         } catch (e) {
             console.log(e);
         }
     }
 
+    /**
+    * Stop audio
+    */
     stopOutput() {
         this.outputSource.stop();
     }
+
 }

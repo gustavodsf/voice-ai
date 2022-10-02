@@ -1,16 +1,19 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
-import { MicrophoneComponent } from './microphone/microphone.component';
-import { DialogflowComponent } from './dialogflow/dialogflow.component';
-import { WaveformComponent } from './waveform/waveform.component';
+import { AppComponent } from './app.component';
 
 import { IoService } from './services/io.service';
 import { FulfillmentService} from './services/fulfillment.service';
 import { EventService} from './services/event.service';
+
+
+import { MicrophoneComponent } from './microphone/microphone.component';
+import { DialogflowComponent } from './dialogflow/dialogflow.component';
+import { WaveformComponent } from './waveform/waveform.component';
 
 @NgModule({
   declarations: [
@@ -20,16 +23,16 @@ import { EventService} from './services/event.service';
     WaveformComponent
   ],
   imports: [
+    BrowserModule,
+    FormsModule,
     AppRoutingModule,
-    BrowserModule
+    HttpClientModule
   ],
   providers: [
     IoService,
     FulfillmentService,
     EventService
   ],
-  bootstrap: [
-    AppComponent
-  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

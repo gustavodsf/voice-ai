@@ -7,11 +7,11 @@ export class IoService {
     public socketio: any;
 
     constructor() {
-        this.socketio = io();
-        this.socket = this.socketio.on('connect', function() {
-            console.log('connected');
-        });
-        this.socket.binaryType = 'arraybuffer';
+      this.socketio = io('http://localhost:3000');
+      this.socket = this.socketio.on('connect', function() {
+          console.log('connected');
+      });
+      this.socket.binaryType = 'arraybuffer';
     }
 
     sendBinaryStream(blob: any) {

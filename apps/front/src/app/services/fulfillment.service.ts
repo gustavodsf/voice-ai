@@ -13,11 +13,9 @@ export class FulfillmentService {
             FULFILLMENTS: []
         };
     }
-
     getFulfillment() {
         return this.fulfillment;
     }
-
     setFulfillments(data: any) {
         //console.log(data);
         if (data == null) {
@@ -43,7 +41,6 @@ export class FulfillmentService {
             this.fulfillment.FULFILLMENTS = this.matches;
         }
     }
-
     clearAll() {
         this.matches = [];
         this.fulfillment.UTTERANCE = this.defaultMessage;

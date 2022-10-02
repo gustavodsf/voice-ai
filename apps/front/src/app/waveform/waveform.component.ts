@@ -1,13 +1,15 @@
+
 import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { FulfillmentService } from '../services/fulfillment.service';
 import { Fulfillment } from '../models/fulfillment.model';
 
 @Component({
-    selector: 'app-waveform',
-    templateUrl: './waveform.component.html',
-    styleUrls: ['./waveform.component.css']
+  selector: 'app-waveform',
+  templateUrl: './waveform.component.html',
+  styleUrls: ['./waveform.component.scss']
 })
-export class WaveformComponent {
+
+export class WaveformComponent implements OnInit {
     @ViewChild('visualizer', { static: false }) canvas: ElementRef;
     public canvasCtx: any;
     public fulfillment: Fulfillment;
@@ -16,10 +18,11 @@ export class WaveformComponent {
     public analyser: AnalyserNode;
     public myReq: number;
 
-
     constructor(public fulfillmentService: FulfillmentService) {
         this.fulfillment = this.fulfillmentService.getFulfillment();
     }
+
+    ngOnInit() {}
 
     public start(stream: MediaStream) {
         this.audioCtx = new AudioContext();
@@ -48,7 +51,7 @@ export class WaveformComponent {
             me.canvasCtx.lineTo(width, height / 2);
             me.canvasCtx.stroke();
         }
-    } 
+    }
 
     visualize() {
         let me = this;
