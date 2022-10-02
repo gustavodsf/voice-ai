@@ -1,1 +1,6 @@
-<voice-ai-nx-welcome></voice-ai-nx-welcome>
+<div class="wrapper">
+    <app-microphone [waveform]="waveform"></app-microphone>
+    <app-waveform #waveform></app-waveform>
+    <app-dialogflow></app-dialogflow>
+</div>
+<router-outlet></router-outlet>
