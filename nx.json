@@ -14,7 +14,7 @@
           "test",
           "e2e"
         ],
-        "accessToken": "MmRlODk5NWMtY2M0Ni00MDJkLTk2MGYtYWMzMTZlMTVjN2Q2fHJlYWQtd3JpdGU="
+        "accessToken": "NGU2MDRlMzctYzBkMy00ZTI5LWI2NTktM2RjNGRiNWEwZjMxfHJlYWQtd3JpdGU="
       }
     }
   },
@@ -27,25 +27,6 @@
         "production",
         "^production"
       ]
-    },
-    "test": {
-      "inputs": [
-        "default",
-        "^production",
-        "{workspaceRoot}/jest.preset.js"
-      ]
-    },
-    "e2e": {
-      "inputs": [
-        "default",
-        "^production"
-      ]
-    },
-    "lint": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json"
-      ]
     }
   },
   "namedInputs": {
@@ -54,42 +35,8 @@
       "sharedGlobals"
     ],
     "production": [
-      "default",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/.eslintrc.json"
+      "default"
     ],
     "sharedGlobals": []
-  },
-  "cli": {
-    "packageManager": "npm"
-  },
-  "generators": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "style": "css",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/angular:component": {
-      "style": "css"
-    }
-  },
-  "defaultProject": "front"
+  }
 }
